@@ -28,7 +28,7 @@ if not os.path.exists(EXCEL_FILE):
         'experience', 'photo_path', 'rate', 'registration_date'])
     try:
         with pd.ExcelWriter(EXCEL_FILE, engine="xlsxwriter") as writer:
-    df.to_excel(writer, index=False)
+            df.to_excel(writer, index=False)
     except Exception as e:
         st.error(f"Error creating Excel file: {str(e)}")
         raise
