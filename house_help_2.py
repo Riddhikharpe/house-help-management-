@@ -7,6 +7,13 @@ from datetime import datetime
 EXCEL_FILE = 'house_helps.xlsx'
 UPLOADS_DIR = 'uploads'
 
+# Ensure required libraries are installed
+try:
+    import openpyxl
+except ImportError:
+    st.error("The `openpyxl` library is required but not installed. Install it using `pip install openpyxl`.")
+    raise
+
 # User authentication
 USER_CREDENTIALS = {"admin": "password123"}  # Simple dictionary for username and password
 
@@ -18,11 +25,14 @@ if not os.path.exists(UPLOADS_DIR):
 if not os.path.exists(EXCEL_FILE):
     df = pd.DataFrame(columns=[
         'name', 'age', 'gender', 'address', 'contact',
-        'experience', 'photo_path', 'rate', 'registration_date'
-    ])
-    with pd.ExcelWriter(EXCEL_FILE, engine="openpyxl") as writer:
-        df.to_excel(writer, index=False)
-
+        'experience', 'photo_path', 'rate', 'registration_date'])
+    try:
+        with pd.ExcelWriter(EXCEL_FILE, engine="openpyxl") as writer:
+            df.to_excel(writer, index=False)
+    except Exception as e:
+        st.error(f"Error creating Excel file: {str(e)}")
+        raise
+        
 # Function to register a helper
 def register_helper():
     st.subheader("Register New Helper")
