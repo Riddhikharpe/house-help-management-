@@ -2,17 +2,11 @@ import streamlit as st
 import pandas as pd
 import os
 from datetime import datetime
+import xlsxwriter
 
 # Configure file paths
 EXCEL_FILE = 'house_helps.xlsx'
 UPLOADS_DIR = 'uploads'
-
-# Ensure required libraries are installed
-try:
-    import xlsxwriter
-except ImportError:
-    st.error("The `openpyxl` library is required but not installed. Install it using `pip install openpyxl`.")
-    raise
 
 # User authentication
 USER_CREDENTIALS = {"admin": "password123"}  # Simple dictionary for username and password
