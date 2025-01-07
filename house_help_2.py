@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import os
-os.system('pip install openpyxl')
 from datetime import datetime
 
 # Configure file paths
@@ -10,7 +9,7 @@ UPLOADS_DIR = 'uploads'
 
 # Ensure required libraries are installed
 try:
-    import openpyxl
+    import xlsxwriter
 except ImportError:
     st.error("The `openpyxl` library is required but not installed. Install it using `pip install openpyxl`.")
     raise
@@ -28,8 +27,8 @@ if not os.path.exists(EXCEL_FILE):
         'name', 'age', 'gender', 'address', 'contact',
         'experience', 'photo_path', 'rate', 'registration_date'])
     try:
-        with pd.ExcelWriter(EXCEL_FILE, engine="openpyxl") as writer:
-            df.to_excel(writer, index=False)
+        with pd.ExcelWriter(EXCEL_FILE, engine="xlsxwriter") as writer:
+    df.to_excel(writer, index=False)
     except Exception as e:
         st.error(f"Error creating Excel file: {str(e)}")
         raise
