@@ -29,7 +29,7 @@ if not os.path.exists(EXCEL_FILE):
         'name', 'age', 'gender', 'address', 'contact',
         'experience', 'photo_path', 'rate', 'registration_date'
     ])
-    df.to_excel(EXCEL_FILE, index=False)
+    df.to_excel(EXCEL_FILE, index=True)
 
 # Function to register a helper
 def register_helper():
