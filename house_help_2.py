@@ -25,7 +25,7 @@ if not os.path.exists(EXCEL_FILE):
     except Exception as e:
         st.error(f"Error creating Excel file: {str(e)}")
         raise
-        
+
 # Function to register a helper
 def register_helper():
     st.subheader("Register New Helper")
@@ -68,13 +68,13 @@ def register_helper():
             }
 
             # Read existing data
-            df = pd.read_excel(EXCEL_FILE, engine="openpyxl")
+            df = pd.read_excel(EXCEL_FILE, engine="xlsxwriter")
 
             # Append new data
             df = pd.concat([df, pd.DataFrame([data])], ignore_index=True)
 
             # Save back to Excel
-            with pd.ExcelWriter(EXCEL_FILE, engine="openpyxl") as writer:
+            with pd.ExcelWriter(EXCEL_FILE, engine="xlsxwriter") as writer:
                 df.to_excel(writer, index=False)
 
             st.success("Registration successful!")
@@ -92,7 +92,7 @@ def search_helpers():
     if st.button("Search"):
         try:
             # Read Excel file
-            df = pd.read_excel(EXCEL_FILE, engine="openpyxl")
+            df = pd.read_excel(EXCEL_FILE, engine="xlsxwriter")
 
             # Filter by max price
             filtered_df = df[df['rate'] <= max_price]
@@ -115,7 +115,13 @@ def download_excel():
     if st.button("Login"):
         if username in USER_CREDENTIALS and USER_CREDENTIALS[username] == password:
             st.success("Login successful!")
-            st.markdown(f"[Download Excel File](./{EXCEL_FILE})")
+            with open(EXCEL_FILE, "rb") as file:
+                st.download_button(
+                    label="Download Excel File",
+                    data=file,
+                    file_name=EXCEL_FILE,
+                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                )
         else:
             st.error("Invalid username or password")
 
