@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import os
+os.system('pip install openpyxl')
 from datetime import datetime
 
 # Configure file paths
